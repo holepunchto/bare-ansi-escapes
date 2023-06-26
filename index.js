@@ -2,6 +2,14 @@
 const { Transform } = require('streamx')
 
 const ESC = '\x1b'
+const CSI = ESC + '['
+
+exports.constants = {
+  ESC,
+  CSI
+}
+
+// https://en.wikipedia.org/wiki/ANSI_escape_code#Terminal_input_sequences
 
 const metaKeyCode = /^(?:\x1b)([a-zA-Z0-9])$/
 const functionKeyCode = /^(?:\x1b+)(O|N|\[|\[\[)(?:(\d+)(?:;(\d+))?([~^$])|(?:1;)?(\d+)?([a-zA-Z]))/
@@ -184,4 +192,56 @@ function mapWritable (encoding, data) {
   }
 
   return data
+}
+
+// https://en.wikipedia.org/wiki/ANSI_escape_code#CSI_(Control_Sequence_Introducer)_sequences
+
+exports.cursorUp = function cursorUp (n = 1) {
+  return CSI + n + 'A'
+}
+
+exports.cursorDown = function cursorDown (n = 1) {
+  return CSI + n + 'B'
+}
+
+exports.cursorForward = function cursorForward (n = 1) {
+  return CSI + n + 'C'
+}
+
+exports.cursorBack = function cursorBack (n = 1) {
+  return CSI + n + 'D'
+}
+
+exports.cursorNextLine = function cursorNextLine (n = 1) {
+  return CSI + n + 'E'
+}
+
+exports.cursorPreviousLine = function cursorPreviousLine (n = 1) {
+  return CSI + n + 'F'
+}
+
+exports.cursorPosition = function cursorPosition (column, row = 0) {
+  if (row === 0) return CSI + (column + 1) + 'G'
+
+  return CSI + (row + 1) + ';' + (column + 1) + 'H'
+}
+
+exports.eraseDisplayEnd = CSI + 'J'
+
+exports.eraseDisplayStart = CSI + '1J'
+
+exports.eraseDisplay = CSI + '2J'
+
+exports.eraseLineEnd = CSI + 'K'
+
+exports.eraseLineStart = CSI + '1K'
+
+exports.eraseLine = CSI + '2K'
+
+exports.scrollUp = function scrollUp (n = 1) {
+  return CSI + n + 'S'
+}
+
+exports.scrollDown = function scrollDown (n = 1) {
+  return CSI + n + 'T'
 }
