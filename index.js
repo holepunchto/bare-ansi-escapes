@@ -3,10 +3,12 @@ const { Transform } = require('streamx')
 
 const ESC = '\x1b'
 const CSI = ESC + '['
+const SGR = n => CSI + n + 'm'
 
 exports.constants = {
   ESC,
-  CSI
+  CSI,
+  SGR
 }
 
 // https://en.wikipedia.org/wiki/ANSI_escape_code#Terminal_input_sequences
@@ -227,15 +229,10 @@ exports.cursorPosition = function cursorPosition (column, row = 0) {
 }
 
 exports.eraseDisplayEnd = CSI + 'J'
-
 exports.eraseDisplayStart = CSI + '1J'
-
 exports.eraseDisplay = CSI + '2J'
-
 exports.eraseLineEnd = CSI + 'K'
-
 exports.eraseLineStart = CSI + '1K'
-
 exports.eraseLine = CSI + '2K'
 
 exports.scrollUp = function scrollUp (n = 1) {
@@ -245,3 +242,26 @@ exports.scrollUp = function scrollUp (n = 1) {
 exports.scrollDown = function scrollDown (n = 1) {
   return CSI + n + 'T'
 }
+
+// https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters
+
+exports.modifierReset = SGR(0)
+exports.modifierBold = SGR(1)
+exports.modifierDim = SGR(2)
+exports.modifierItalic = SGR(3)
+exports.modifierUnderline = SGR(4)
+exports.modifierNormal = SGR(22)
+exports.modifierNotItalic = SGR(23)
+exports.modifierNotUnderline = SGR(24)
+
+// https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+
+exports.colorBlack = SGR(30)
+exports.colorRed = SGR(31)
+exports.colorGreen = SGR(32)
+exports.colorYellow = SGR(33)
+exports.colorBlue = SGR(34)
+exports.colorMagenta = SGR(35)
+exports.colorCyan = SGR(36)
+exports.colorWhite = SGR(37)
+exports.colorDefault = SGR(39)
