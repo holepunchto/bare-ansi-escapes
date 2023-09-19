@@ -9,10 +9,10 @@ npm i bare-ansi-escapes
 ## Usage
 
 ``` js
-const ansiEscapes = require('bare-ansi-escapes')
+const KeyDecoder = require('bare-ansi-escapes/key-decoder')
 
 readableStream
-  .pipe(new ansiEscapes.KeyDecoder())
+  .pipe(new KeyDecoder())
   .on('data', (key) => console.log(key))
 ```
 

@@ -4,7 +4,8 @@
   "description": "Parse and produce ANSI escape sequences",
   "main": "index.js",
   "files": [
-    "index.js"
+    "index.js",
+    "key-decoder.js"
   ],
   "scripts": {
     "test": "standard && bare test.js"
@@ -19,11 +20,11 @@
     "url": "https://github.com/holepunchto/bare-ansi-escapes/issues"
   },
   "homepage": "https://github.com/holepunchto/bare-ansi-escapes#readme",
+  "dependencies": {
+    "streamx": "^2.15.0"
+  },
   "devDependencies": {
     "brittle": "^3.3.2",
     "standard": "^17.0.0"
-  },
-  "dependencies": {
-    "streamx": "^2.15.0"
   }
 }

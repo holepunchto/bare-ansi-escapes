@@ -1,6 +1,6 @@
 const test = require('brittle')
 const { PassThrough } = require('streamx')
-const ansiEscapes = require('.')
+const KeyDecoder = require('./key-decoder')
 
 test('key decoder, plain character', (t) => {
   t.plan(4)
@@ -8,7 +8,7 @@ test('key decoder, plain character', (t) => {
   const stream = new PassThrough()
 
   stream
-    .pipe(new ansiEscapes.KeyDecoder())
+    .pipe(new KeyDecoder())
     .on('data', (key) => {
       t.is(key.name, 'a')
       t.absent(key.ctrl)
@@ -24,7 +24,7 @@ test('key decoder, ctrl + c', (t) => {
   const stream = new PassThrough()
 
   stream
-    .pipe(new ansiEscapes.KeyDecoder())
+    .pipe(new KeyDecoder())
     .on('data', (key) => {
       t.is(key.name, 'c')
       t.ok(key.ctrl)
