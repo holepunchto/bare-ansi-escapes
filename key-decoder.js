@@ -1,5 +1,5 @@
 /* eslint-disable no-control-regex */
-const { Transform } = require('streamx')
+const { Transform } = require('bare-stream')
 
 const { constants: { ESC } } = require('.')
 
