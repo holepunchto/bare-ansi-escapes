@@ -10,6 +10,9 @@ exports.constants = {
 
 // https://en.wikipedia.org/wiki/ANSI_escape_code#CSI_(Control_Sequence_Introducer)_sequences
 
+exports.cursorHide = CSI + '?25l'
+exports.cursorShow = CSI + '?25h'
+
 exports.cursorUp = function cursorUp (n = 1) {
   return CSI + n + 'A'
 }
