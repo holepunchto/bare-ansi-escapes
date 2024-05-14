@@ -5,7 +5,6 @@ const { constants: { ESC } } = require('.')
 
 // https://en.wikipedia.org/wiki/ANSI_escape_code#Terminal_input_sequences
 
-const metaKeyCode = /^(?:\x1b)([a-zA-Z0-9])$/
 const functionKeyCode = /^(?:\x1b+)(O|N|\[|\[\[)(?:(\d+)(?:;(\d+))?([~^$])|(?:1;)?(\d+)?([a-zA-Z]))/
 
 module.exports = class KeyDecoder extends Transform {
@@ -19,30 +18,10 @@ module.exports = class KeyDecoder extends Transform {
     this.encoding = encoding
   }
 
-  _dataToKey (data) {
+  _transform (data, cb) {
     let parts
 
-    if (data === '\r') {
-      return new Key('return')
-    } else if (data === '\n') {
-      return new Key('linefeed')
-    } else if (data === '\t') {
-      return new Key('tab')
-    } else if (data === '\b' || data === ESC + '\b' || data === '\x7f' || data === ESC + '\x7f') {
-      return new Key('backspace', { meta: data[0] === ESC })
-    } else if (data === ESC || data === ESC + ESC) {
-      return new Key('escape', { meta: data.length === 2 })
-    } else if (data === ' ' || data === ESC + ' ') {
-      return new Key('space', { meta: data.length === 2 })
-    } else if (data <= '\x1a') {
-      return new Key(data.charCodeAt(0) + 0x60, { ctrl: true })
-    } else if (data.length === 1 && data >= 'a' && data <= 'z') {
-      return new Key(data)
-    } else if (data.length === 1 && data >= 'A' && data <= 'Z') {
-      return new Key(data.toLowerCase(), { shift: true })
-    } else if ((parts = metaKeyCode.exec(data))) {
-      return new Key(parts[1].toLowerCase(), { meta: true, shift: /^[A-Z]$/.test(parts[1]) })
-    } else if ((parts = functionKeyCode.exec(data))) {
+    if ((parts = functionKeyCode.exec(data))) {
       const code = (parts[1] || '') + (parts[2] || '') + (parts[4] || '') + (parts[6] || '')
       const modifier = (parts[3] || parts[5] || 1) - 1
 
@@ -149,17 +128,59 @@ module.exports = class KeyDecoder extends Transform {
         case '[Z': name = 'tab'; opts.shift = true; break
       }
 
-      return new Key(name, opts)
-    }
-  }
-
-  _transform (data, cb) {
-    const key = this._dataToKey(data)
-    if (key) {
-      this.push(key)
+      this.push(new Key(name, opts))
     } else {
-      for (const name of data) {
-        if (name) this.push(this._dataToKey(name) ?? new Key(name))
+      let escaped = false
+      for (const char of data) {
+        if (char === ESC) {
+          if (escaped) {
+            this.push(new Key('escape', { meta: true }))
+            escaped = false
+          } else {
+            escaped = true
+          }
+          continue
+        }
+
+        const keys = []
+
+        if (char === '\r') {
+          keys.push(new Key('return'))
+        } else if (char === '\n') {
+          keys.push(new Key('linefeed'))
+        } else if (char === '\t') {
+          keys.push(new Key('tab'))
+        } else if (char === '\b' || char === '\x7f') {
+          keys.push(new Key('backspace', { meta: escaped }))
+          escaped = false // clear escape prefix if there
+        } else if (char === ' ') {
+          keys.push(new Key('space', { meta: escaped }))
+          escaped = false // clear escape prefix if there
+        } else if (char <= '\x1a') {
+          keys.push(new Key(char.charCodeAt(0) + 0x60, { ctrl: true }))
+        } else if (char >= 'a' && char <= 'z') {
+          keys.push(new Key(char, { meta: escaped }))
+          escaped = false // clear escape prefix if there
+        } else if (char >= 'A' && char <= 'Z') {
+          keys.push(new Key(char.toLowerCase(), { meta: escaped, shift: true }))
+          escaped = false // clear escape prefix if there
+        } else {
+          keys.push(new Key(char))
+        }
+
+        if (escaped) {
+          keys.unshift(new Key('escape'))
+          escaped = false // clear escape
+        }
+
+        for (const key of keys) {
+          this.push(key)
+        }
+      }
+
+      // ESC was last character
+      if (escaped) {
+        this.push(new Key('escape'))
       }
     }
 
