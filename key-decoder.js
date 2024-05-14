@@ -19,29 +19,29 @@ module.exports = class KeyDecoder extends Transform {
     this.encoding = encoding
   }
 
-  _transform (data, cb) {
+  _dataToKey (data) {
     let parts
 
     if (data === '\r') {
-      this.push(new Key('return'))
+      return new Key('return')
     } else if (data === '\n') {
-      this.push(new Key('linefeed'))
+      return new Key('linefeed')
     } else if (data === '\t') {
-      this.push(new Key('tab'))
+      return new Key('tab')
     } else if (data === '\b' || data === ESC + '\b' || data === '\x7f' || data === ESC + '\x7f') {
-      this.push(new Key('backspace', { meta: data[0] === ESC }))
+      return new Key('backspace', { meta: data[0] === ESC })
     } else if (data === ESC || data === ESC + ESC) {
-      this.push(new Key('escape', { meta: data.length === 2 }))
+      return new Key('escape', { meta: data.length === 2 })
     } else if (data === ' ' || data === ESC + ' ') {
-      this.push(new Key('space', { meta: data.length === 2 }))
+      return new Key('space', { meta: data.length === 2 })
     } else if (data <= '\x1a') {
-      this.push(new Key(data.charCodeAt(0) + 0x60, { ctrl: true }))
+      return new Key(data.charCodeAt(0) + 0x60, { ctrl: true })
     } else if (data.length === 1 && data >= 'a' && data <= 'z') {
-      this.push(new Key(data))
+      return new Key(data)
     } else if (data.length === 1 && data >= 'A' && data <= 'Z') {
-      this.push(new Key(data.toLowerCase(), { shift: true }))
+      return new Key(data.toLowerCase(), { shift: true })
     } else if ((parts = metaKeyCode.exec(data))) {
-      this.push(new Key(parts[1].toLowerCase(), { meta: true, shift: /^[A-Z]$/.test(parts[1]) }))
+      return new Key(parts[1].toLowerCase(), { meta: true, shift: /^[A-Z]$/.test(parts[1]) })
     } else if ((parts = functionKeyCode.exec(data))) {
       const code = (parts[1] || '') + (parts[2] || '') + (parts[4] || '') + (parts[6] || '')
       const modifier = (parts[3] || parts[5] || 1) - 1
@@ -149,10 +149,17 @@ module.exports = class KeyDecoder extends Transform {
         case '[Z': name = 'tab'; opts.shift = true; break
       }
 
-      this.push(new Key(name, opts))
+      return new Key(name, opts)
+    }
+  }
+
+  _transform (data, cb) {
+    const key = this._dataToKey(data)
+    if (key) {
+      this.push(key)
     } else {
       for (const name of data) {
-        if (name) this.push(new Key(name))
+        if (name) this.push(this._dataToKey(name) ?? new Key(name))
       }
     }
 
