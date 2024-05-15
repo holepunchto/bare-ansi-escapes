@@ -115,7 +115,7 @@ test('key decoder, meta alphanumeric uppercase', (t) => {
 })
 
 test('key decoder, backspace', (t) => {
-  t.plan(16)
+  t.plan(8)
 
   const stream = new PassThrough()
 
@@ -129,11 +129,14 @@ test('key decoder, backspace', (t) => {
     })
   stream.write('\b')
   stream.write('\x7f')
+})
 
-  // With meta prefix
-  const streamMeta = new PassThrough()
+test('key decoder, backspace with meta prefix', (t) => {
+  t.plan(8)
 
-  streamMeta
+  const stream = new PassThrough()
+
+  stream
     .pipe(new KeyDecoder())
     .on('data', (key) => {
       t.is(key.name, 'backspace')
@@ -141,8 +144,8 @@ test('key decoder, backspace', (t) => {
       t.ok(key.meta)
       t.absent(key.shift)
     })
-  streamMeta.write('\x1b\b')
-  streamMeta.write('\x1b\x7f')
+  stream.write('\x1b\b')
+  stream.write('\x1b\x7f')
 })
 
 test('key decoder, space', (t) => {
