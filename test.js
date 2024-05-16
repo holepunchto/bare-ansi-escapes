@@ -34,6 +34,62 @@ test('key decoder, numeric character', (t) => {
     .write('1')
 })
 
+test('key decoder, non-alphanumeric', (t) => {
+  t.plan(20)
+
+  const stream = new PassThrough()
+
+  const expected = ['-', ';', '$', '^', '[']
+
+  let i = 0
+
+  stream
+    .pipe(new KeyDecoder())
+    .on('data', (key) => {
+      t.is(key.name, expected[i++])
+      t.absent(key.ctrl)
+      t.absent(key.meta)
+      t.absent(key.shift)
+    })
+    .write('-;$^[')
+})
+
+test('key decoder, diaeresis', (t) => {
+  t.plan(4)
+
+  const stream = new PassThrough()
+
+  const expected = ['ë']
+
+  let i = 0
+
+  stream
+    .pipe(new KeyDecoder())
+    .on('data', (key) => {
+      t.is(key.name, expected[i++])
+      t.absent(key.ctrl)
+      t.absent(key.meta)
+      t.absent(key.shift)
+    })
+    .write('\u00eb')
+})
+
+test('key decoder, 1 wide emoji', (t) => {
+  t.plan(4)
+
+  const stream = new PassThrough()
+
+  stream
+    .pipe(new KeyDecoder())
+    .on('data', (key) => {
+      t.is(key.name, '🍐')
+      t.absent(key.ctrl)
+      t.absent(key.meta)
+      t.absent(key.shift)
+    })
+    .write('🍐')
+})
+
 test('key decoder, ctrl + c', (t) => {
   t.plan(4)
 

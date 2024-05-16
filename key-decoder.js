@@ -289,7 +289,7 @@ function * parseKeys (stream) {
     const sequence = s
 
     if (s.length > 0 && (name !== null || escaped || charLengthAt(s, 0) === s.length)) {
-      stream.push(new Key(name, sequence, ctrl, meta, shift))
+      stream.push(new Key(name === null ? sequence : name, sequence, ctrl, meta, shift))
     }
   }
 }
