@@ -1,6 +1,6 @@
 {
   "name": "bare-ansi-escapes",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Parse and produce ANSI escape sequences",
   "main": "index.js",
   "files": [
