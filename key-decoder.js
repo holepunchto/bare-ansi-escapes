@@ -11,7 +11,7 @@ module.exports = class KeyDecoder extends Transform {
       escapeCodeTimeout = 500
     } = opts
 
-    super({ mapWritable: mapWritable.bind(null, encoding) })
+    super()
 
     this.encoding = encoding
 
@@ -22,8 +22,15 @@ module.exports = class KeyDecoder extends Transform {
     this._parser.next()
   }
 
-  _transform (data, cb) {
+  _transform (data, encoding, cb) {
     clearTimeout(this._escapeTimer)
+
+    if (data[0] > 127 && data.length === 1) {
+      data[0] -= 128
+      data = ESC + data.toString(this.encoding)
+    } else {
+      data = data.toString(this.encoding)
+    }
 
     let n = 0
 
@@ -292,17 +299,4 @@ function * parseKeys (stream) {
       stream.push(new Key(name === null ? sequence : name, sequence, ctrl, meta, shift))
     }
   }
-}
-
-function mapWritable (encoding, data) {
-  if (Buffer.isBuffer(data)) {
-    if (data[0] > 127 && data.length === 1) {
-      data[0] -= 128
-      data = ESC + data.toString(encoding)
-    } else {
-      data = data.toString(encoding)
-    }
-  }
-
-  return data
 }

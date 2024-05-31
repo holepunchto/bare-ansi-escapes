@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/holepunchto/bare-ansi-escapes#readme",
   "dependencies": {
-    "bare-stream": "^1.0.0"
+    "bare-stream": "^2.0.0"
   },
   "devDependencies": {
     "brittle": "^3.3.2",
