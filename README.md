@@ -8,12 +8,10 @@ npm i bare-ansi-escapes
 
 ## Usage
 
-``` js
+```js
 const KeyDecoder = require('bare-ansi-escapes/key-decoder')
 
-readableStream
-  .pipe(new KeyDecoder())
-  .on('data', (key) => console.log(key))
+readableStream.pipe(new KeyDecoder()).on('data', (key) => console.log(key))
 ```
 
 ## License

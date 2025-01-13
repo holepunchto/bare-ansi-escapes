@@ -175,14 +175,12 @@ test('key decoder, backspace', (t) => {
 
   const stream = new PassThrough()
 
-  stream
-    .pipe(new KeyDecoder())
-    .on('data', (key) => {
-      t.is(key.name, 'backspace')
-      t.absent(key.ctrl)
-      t.absent(key.meta)
-      t.absent(key.shift)
-    })
+  stream.pipe(new KeyDecoder()).on('data', (key) => {
+    t.is(key.name, 'backspace')
+    t.absent(key.ctrl)
+    t.absent(key.meta)
+    t.absent(key.shift)
+  })
   stream.write('\b')
   stream.write('\x7f')
 })
@@ -192,14 +190,12 @@ test('key decoder, backspace with meta prefix', (t) => {
 
   const stream = new PassThrough()
 
-  stream
-    .pipe(new KeyDecoder())
-    .on('data', (key) => {
-      t.is(key.name, 'backspace')
-      t.absent(key.ctrl)
-      t.ok(key.meta)
-      t.absent(key.shift)
-    })
+  stream.pipe(new KeyDecoder()).on('data', (key) => {
+    t.is(key.name, 'backspace')
+    t.absent(key.ctrl)
+    t.ok(key.meta)
+    t.absent(key.shift)
+  })
   stream.write('\x1b\b')
   stream.write('\x1b\x7f')
 })
@@ -272,7 +268,7 @@ test('key decoder, multiple characters', (t) => {
     .write('ab\x0a')
 })
 
-test('key decoder, esc before non escapable char isn\'t emitted', (t) => {
+test("key decoder, esc before non escapable char isn't emitted", (t) => {
   t.plan(8)
 
   const stream = new PassThrough()
