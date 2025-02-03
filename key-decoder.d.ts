@@ -7,7 +7,7 @@ interface KeyDecoderOptions {
 }
 
 interface KeyDecoderEvents extends TransformEvents {
-  data: [data: Key]
+  data: [key: Key]
 }
 
 interface KeyDecoder<M extends KeyDecoderEvents = KeyDecoderEvents>

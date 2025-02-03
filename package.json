@@ -3,6 +3,7 @@
   "version": "2.2.2",
   "description": "Parse and produce ANSI escape sequences",
   "exports": {
+    "./package": "./package.json",
     ".": {
       "types": "./index.d.ts",
       "default": "./index.js"
@@ -10,8 +11,7 @@
     "./key-decoder": {
       "types": "./key-decoder.d.ts",
       "default": "./key-decoder.js"
-    },
-    "./package": "./package.json"
+    }
   },
   "files": [
     "index.js",
@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/holepunchto/bare-ansi-escapes#readme",
   "dependencies": {
-    "bare-stream": "^2.6.4"
+    "bare-stream": "^2.6.5"
   },
   "devDependencies": {
     "bare-buffer": "^3.0.2",

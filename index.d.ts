@@ -3,12 +3,12 @@ export const constants: { ESC: string; CSI: string; SGR: (n: number) => string }
 export const cursorHide: string
 export const cursorShow: string
 
-export function cursorUp(n?: numbre): string
-export function cursorDown(n?: numbre): string
-export function cursorForward(n?: numbre): string
-export function cursorBack(n?: numbre): string
-export function cursorNextLine(n?: numbre): string
-export function cursorPreviousLine(n?: numbre): string
+export function cursorUp(n?: number): string
+export function cursorDown(n?: number): string
+export function cursorForward(n?: number): string
+export function cursorBack(n?: number): string
+export function cursorNextLine(n?: number): string
+export function cursorPreviousLine(n?: number): string
 
 export function cursorPosition(column: number, row?: number): string
 
@@ -19,8 +19,8 @@ export const eraseLineEnd: string
 export const eraseLineStart: string
 export const eraseLine: string
 
-export function scrollUp(n?: numbre): string
-export function scrollDown(n?: numbre): string
+export function scrollUp(n?: number): string
+export function scrollDown(n?: number): string
 
 export const modifierReset: string
 export const modifierBold: string
