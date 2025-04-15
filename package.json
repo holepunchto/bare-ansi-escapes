@@ -1,6 +1,6 @@
 {
   "name": "bare-ansi-escapes",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "Parse and produce ANSI escape sequences",
   "exports": {
     "./package": "./package.json",
