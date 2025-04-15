@@ -1,6 +1,6 @@
 const test = require('brittle')
 const { PassThrough } = require('bare-stream')
-const KeyDecoder = require('./key-decoder')
+const KeyDecoder = require('./lib/key-decoder')
 
 test('key decoder, plain character', (t) => {
   t.plan(4)

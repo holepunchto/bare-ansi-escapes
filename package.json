@@ -9,15 +9,14 @@
       "default": "./index.js"
     },
     "./key-decoder": {
-      "types": "./key-decoder.d.ts",
-      "default": "./key-decoder.js"
+      "types": "./lib/key-decoder.d.ts",
+      "default": "./lib/key-decoder.js"
     }
   },
   "files": [
     "index.js",
     "index.d.ts",
-    "key-decoder.js",
-    "key-decoder.d.ts"
+    "lib"
   ],
   "scripts": {
     "test": "prettier . --check && bare test.js"
