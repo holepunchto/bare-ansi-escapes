@@ -88,3 +88,5 @@ exports.colorBrightBlue = SGR(94)
 exports.colorBrightMagenta = SGR(95)
 exports.colorBrightCyan = SGR(96)
 exports.colorBrightWhite = SGR(97)
+
+exports.stylize = require('./lib/stylize')

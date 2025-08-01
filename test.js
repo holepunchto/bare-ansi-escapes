@@ -1,5 +1,6 @@
 const test = require('brittle')
 const { PassThrough } = require('bare-stream')
+const { stylize } = require('.')
 const KeyDecoder = require('./lib/key-decoder')
 
 test('key decoder, plain character', (t) => {
@@ -286,4 +287,14 @@ test("key decoder, esc before non escapable char isn't emitted", (t) => {
       t.absent(key.shift)
     })
     .write('\x1b\t\x1b')
+})
+
+test('stylize', (t) => {
+  t.is(stylize.bold('hello'), '\x1B[1mhello\x1B[0m', 'basic')
+
+  t.is(
+    stylize.underline(stylize.green('hello')),
+    '\x1B[4m\x1B[32mhello\x1B[0m\x1B[0m',
+    'multiple'
+  )
 })
