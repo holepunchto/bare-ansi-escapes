@@ -10,8 +10,7 @@ interface KeyDecoderEvents extends TransformEvents {
   data: [key: Key]
 }
 
-interface KeyDecoder<M extends KeyDecoderEvents = KeyDecoderEvents>
-  extends Transform<M> {
+interface KeyDecoder<M extends KeyDecoderEvents = KeyDecoderEvents> extends Transform<M> {
   readonly encoding: BufferEncoding
 }
 
@@ -28,13 +27,7 @@ interface Key {
 }
 
 declare class Key {
-  constructor(
-    name: string | number,
-    sequence: string,
-    ctrl: boolean,
-    meta: boolean,
-    shift: boolean
-  )
+  constructor(name: string | number, sequence: string, ctrl: boolean, meta: boolean, shift: boolean)
 }
 
 declare namespace KeyDecoder {
