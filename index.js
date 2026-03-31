@@ -37,8 +37,8 @@ exports.cursorPreviousLine = function cursorPreviousLine(n = 1) {
   return CSI + n + 'F'
 }
 
-exports.cursorPosition = function cursorPosition(column, row = 0) {
-  if (row === 0) return CSI + (column + 1) + 'G'
+exports.cursorPosition = function cursorPosition(column, row) {
+  if (row === undefined) return CSI + (column + 1) + 'G'
 
   return CSI + (row + 1) + ';' + (column + 1) + 'H'
 }
