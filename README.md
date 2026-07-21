@@ -19,6 +19,7 @@ readableStream.pipe(new KeyDecoder()).on('data', (key) => console.log(key))
 Apache-2.0
 
 <!-- bare-refgen:api start -->
+
 ## API
 
 ### Functions
@@ -31,9 +32,9 @@ Return the ANSI escape sequence that moves the cursor up `n` lines.
 
 **Parameters**
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `n?` | `number` | — | Number of lines to move up; defaults to `1`. |
+| Parameter | Type     | Default | Description                                  |
+| --------- | -------- | ------- | -------------------------------------------- |
+| `n?`      | `number` | —       | Number of lines to move up; defaults to `1`. |
 
 #### `cursorDown(n?: number): string`
 
@@ -43,9 +44,9 @@ Return the ANSI escape sequence that moves the cursor down `n` lines.
 
 **Parameters**
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `n?` | `number` | — | Number of lines to move down; defaults to `1`. |
+| Parameter | Type     | Default | Description                                    |
+| --------- | -------- | ------- | ---------------------------------------------- |
+| `n?`      | `number` | —       | Number of lines to move down; defaults to `1`. |
 
 #### `cursorForward(n?: number): string`
 
@@ -55,9 +56,9 @@ Return the ANSI escape sequence that moves the cursor forward `n` columns.
 
 **Parameters**
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `n?` | `number` | — | Number of columns to move forward; defaults to `1`. |
+| Parameter | Type     | Default | Description                                         |
+| --------- | -------- | ------- | --------------------------------------------------- |
+| `n?`      | `number` | —       | Number of columns to move forward; defaults to `1`. |
 
 #### `cursorBack(n?: number): string`
 
@@ -67,9 +68,9 @@ Return the ANSI escape sequence that moves the cursor back `n` columns.
 
 **Parameters**
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `n?` | `number` | — | Number of columns to move back; defaults to `1`. |
+| Parameter | Type     | Default | Description                                      |
+| --------- | -------- | ------- | ------------------------------------------------ |
+| `n?`      | `number` | —       | Number of columns to move back; defaults to `1`. |
 
 #### `cursorNextLine(n?: number): string`
 
@@ -79,9 +80,9 @@ Return the ANSI escape sequence that moves the cursor to the start of the line `
 
 **Parameters**
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `n?` | `number` | — | Number of lines down to move; defaults to `1`. |
+| Parameter | Type     | Default | Description                                    |
+| --------- | -------- | ------- | ---------------------------------------------- |
+| `n?`      | `number` | —       | Number of lines down to move; defaults to `1`. |
 
 #### `cursorPreviousLine(n?: number): string`
 
@@ -91,9 +92,9 @@ Return the ANSI escape sequence that moves the cursor to the start of the line `
 
 **Parameters**
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `n?` | `number` | — | Number of lines up to move; defaults to `1`. |
+| Parameter | Type     | Default | Description                                  |
+| --------- | -------- | ------- | -------------------------------------------- |
+| `n?`      | `number` | —       | Number of lines up to move; defaults to `1`. |
 
 #### `cursorPosition(column: number, row?: number): string`
 
@@ -103,10 +104,10 @@ Return the ANSI escape sequence that moves the cursor to `column` and, if given,
 
 **Parameters**
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `column` | `number` | — | Zero-based column to move the cursor to. |
-| `row?` | `number` | — | Zero-based row to move the cursor to; defaults to `0` (the current row). |
+| Parameter | Type     | Default | Description                                                              |
+| --------- | -------- | ------- | ------------------------------------------------------------------------ |
+| `column`  | `number` | —       | Zero-based column to move the cursor to.                                 |
+| `row?`    | `number` | —       | Zero-based row to move the cursor to; defaults to `0` (the current row). |
 
 #### `scrollUp(n?: number): string`
 
@@ -116,9 +117,9 @@ Return the ANSI escape sequence that scrolls the display up `n` lines.
 
 **Parameters**
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `n?` | `number` | — | Number of lines to scroll the display up; defaults to `1`. |
+| Parameter | Type     | Default | Description                                                |
+| --------- | -------- | ------- | ---------------------------------------------------------- |
+| `n?`      | `number` | —       | Number of lines to scroll the display up; defaults to `1`. |
 
 #### `scrollDown(n?: number): string`
 
@@ -128,9 +129,9 @@ Return the ANSI escape sequence that scrolls the display down `n` lines.
 
 **Parameters**
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `n?` | `number` | — | Number of lines to scroll the display down; defaults to `1`. |
+| Parameter | Type     | Default | Description                                                  |
+| --------- | -------- | ------- | ------------------------------------------------------------ |
+| `n?`      | `number` | —       | Number of lines to scroll the display down; defaults to `1`. |
 
 ### Constants and variables
 
@@ -350,9 +351,9 @@ Create a `KeyDecoder`, optionally configuring the input `encoding` and `escapeCo
 
 **Parameters**
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `opts?` | `KeyDecoderOptions` | — | Options controlling the `encoding` and `escapeCodeTimeout` used to decode input; see `KeyDecoderOptions`. |
+| Parameter | Type                | Default | Description                                                                                               |
+| --------- | ------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
+| `opts?`   | `KeyDecoderOptions` | —       | Options controlling the `encoding` and `escapeCodeTimeout` used to decode input; see `KeyDecoderOptions`. |
 
 #### `encoding: BufferEncoding`
 
@@ -370,13 +371,13 @@ Create a `Key` with the given `name`, raw `sequence`, and modifier flags.
 
 **Parameters**
 
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `name` | `string \| number` | — | The decoded key name, e.g. `'up'`, `'return'`, or a single character. |
-| `sequence` | `string` | — | The raw input sequence the key was decoded from. |
-| `ctrl` | `boolean` | — | Whether the Ctrl modifier was held. |
-| `meta` | `boolean` | — | Whether the Meta (Alt) modifier was held. |
-| `shift` | `boolean` | — | Whether the Shift modifier was held. |
+| Parameter  | Type               | Default | Description                                                           |
+| ---------- | ------------------ | ------- | --------------------------------------------------------------------- |
+| `name`     | `string \| number` | —       | The decoded key name, e.g. `'up'`, `'return'`, or a single character. |
+| `sequence` | `string`           | —       | The raw input sequence the key was decoded from.                      |
+| `ctrl`     | `boolean`          | —       | Whether the Ctrl modifier was held.                                   |
+| `meta`     | `boolean`          | —       | Whether the Meta (Alt) modifier was held.                             |
+| `shift`    | `boolean`          | —       | Whether the Shift modifier was held.                                  |
 
 #### `ctrl: boolean`
 
@@ -430,4 +431,5 @@ interface KeyDecoderEvents extends TransformEvents {
 ```
 
 [source](https://github.com/holepunchto/bare-ansi-escapes/blob/v2.2.3/key-decoder.d.ts#L9)
+
 <!-- bare-refgen:api end -->
