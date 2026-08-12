@@ -1,4 +1,7 @@
-/** The raw escape sequence building blocks: `ESC`, `CSI`, and the `SGR` (Select Graphic Rendition) sequence builder. */
+/**
+ * The raw escape sequence building blocks: `ESC`, `CSI`, and the `SGR` (Select Graphic Rendition)
+ * sequence builder.
+ */
 export const constants: { ESC: string; CSI: string; SGR: (n: number) => string }
 
 /** ANSI escape sequence that hides the cursor. */

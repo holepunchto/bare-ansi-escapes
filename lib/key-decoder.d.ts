@@ -4,7 +4,10 @@ import { BufferEncoding } from 'bare-buffer'
 interface KeyDecoderOptions {
   /** Encoding used to decode incoming byte data into characters. Defaults to `'utf8'`. */
   encoding?: BufferEncoding
-  /** Milliseconds to wait for further bytes after a lone escape character before treating it as the `escape` key. Defaults to `500`. */
+  /**
+   * Milliseconds to wait for further bytes after a lone escape character before treating it as the
+   * `escape` key. Defaults to `500`.
+   */
   escapeCodeTimeout?: number
 }
 
@@ -12,7 +15,10 @@ interface KeyDecoderEvents extends TransformEvents {
   data: [key: Key]
 }
 
-/** Transform stream that decodes ANSI input escape sequences from a readable stream into `Key` objects. */
+/**
+ * Transform stream that decodes ANSI input escape sequences from a readable stream into `Key`
+ * objects.
+ */
 interface KeyDecoder<M extends KeyDecoderEvents = KeyDecoderEvents> extends Transform<M> {
   /** The encoding used to decode incoming byte data into characters. */
   readonly encoding: BufferEncoding
@@ -21,7 +27,8 @@ interface KeyDecoder<M extends KeyDecoderEvents = KeyDecoderEvents> extends Tran
 declare class KeyDecoder {
   /**
    * Create a `KeyDecoder`, optionally configuring the input `encoding` and `escapeCodeTimeout`.
-   * @param opts - Options controlling the `encoding` and `escapeCodeTimeout` used to decode input; see `KeyDecoderOptions`.
+   * @param opts - Options controlling the `encoding` and `escapeCodeTimeout` used to decode input;
+   * see `KeyDecoderOptions`.
    */
   constructor(opts?: KeyDecoderOptions)
 }
