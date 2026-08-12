@@ -20,4 +20,6 @@ Apache-2.0
 
 ## API
 
-See the [full API reference](https://docs.pears.com/reference/bare/modules/bare-ansi-escapes).
+See the [`bare-ansi-escapes` reference][reference].
+
+[reference]: https://docs.pears.com/reference/bare/modules/bare-ansi-escapes
