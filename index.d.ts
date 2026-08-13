@@ -43,7 +43,8 @@ export function cursorPreviousLine(n?: number): string
 /**
  * Return the ANSI escape sequence that moves the cursor to `column` and, if given, `row`.
  * @param column - Zero-based column to move the cursor to.
- * @param row - Zero-based row to move the cursor to; defaults to `0` (the current row).
+ * @param row - Zero-based row to move the cursor to. `0`, the default, leaves the row unchanged
+ * and moves within the current row, so row `0` cannot itself be targeted.
  */
 export function cursorPosition(column: number, row?: number): string
 
