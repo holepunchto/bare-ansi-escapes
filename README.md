@@ -16,9 +16,7 @@ readableStream.pipe(new KeyDecoder()).on('data', (key) => console.log(key))
 
 ## API
 
-See the [`bare-ansi-escapes` reference][reference].
-
-[reference]: https://docs.pears.com/reference/bare/modules/bare-ansi-escapes
+See the [`bare-ansi-escapes` reference](https://docs.pears.com/reference/bare/modules/bare-ansi-escapes).
 
 ## License
 
